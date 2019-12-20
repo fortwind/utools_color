@@ -1,0 +1,14 @@
+{
+	"pluginName": "helloWorld",
+	"description": "desc",
+	"main": "./html/index.html",
+	"version": "0.0.1",
+	"preload": "./src/preload.js",
+	"features": [
+	    {
+			"code": "lll",
+			"explain": "hello world",
+	        "cmds":["kkk"]
+	    }
+	]
+}
