@@ -1,20 +1,20 @@
 const fs = require('fs')
 const path = require('path')
 
-const getJsonFile = (jsonPath) => {
+const getJsonFile = (jsonPath, type) => {
   let jsonFiles = []
-  findJsonFile(jsonpath)
+  findJsonFile(jsonPath, type)
 
-  function findJsonFile(json_path) {
+  function findJsonFile(json_path, type) {
     const files = fs.readdirSync(json_path)
     files.map((v) => {
       const fpath = path.join(json_path, v)
       const stat = fs.statSync(fpath)
       // stat.isDirectory() && findJsonFile(fpath)
-      if (v.slice(-4) === 'json' && stat.isFile()) {
-        const name = v.slice(0, -5)
-        const dataJson = fs.readFileSync(fpath, 'utf-8')
-        jsonFiles.push({ name, data: JSON.parse(dataJson) })
+      if (v.split('.')[1] === type && stat.isFile()) {
+        const name = v.split('.')[0]
+        const data = fs.readFileSync(fpath, 'utf-8')
+        jsonFiles.push({ name, data: type === 'json' ? JSON.parse(data) : data })
       }
     })
   }
@@ -22,4 +22,9 @@ const getJsonFile = (jsonPath) => {
 }
 
 const jsonpath = path.join(__dirname, '../colors')
-window.jsonData = getJsonFile(jsonpath)
+window.jsonData = getJsonFile(jsonpath, 'json')
+
+const templatePath = path.join(__dirname, '../template')
+window.template = getJsonFile(templatePath, 'template')
+console.log(template)
+
