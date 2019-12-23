@@ -2,7 +2,7 @@
   "url": "https://flatuicolors.com/",
   "inner": [
     {
-      "name": "Flat UI Palette v1\n🎨",
+      "name": "Flat UI Palette v1",
       "colors": [
         "rgb(26, 188, 156)",
         "rgb(46, 204, 113)",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "name": "American Palette\n🇺🇸",
+      "name": "American Palette",
       "colors": [
         "rgb(85, 239, 196)",
         "rgb(129, 236, 236)",
@@ -52,7 +52,7 @@
       ]
     },
     {
-      "name": "Aussie Palette\n🇦🇺",
+      "name": "Aussie Palette",
       "colors": [
         "rgb(246, 229, 141)",
         "rgb(255, 190, 118)",
@@ -77,7 +77,7 @@
       ]
     },
     {
-      "name": "British Palette\n🇬🇧",
+      "name": "British Palette",
       "colors": [
         "rgb(0, 168, 255)",
         "rgb(156, 136, 255)",
@@ -102,7 +102,7 @@
       ]
     },
     {
-      "name": "Canadian Palette\n🇨🇦",
+      "name": "Canadian Palette",
       "colors": [
         "rgb(255, 159, 243)",
         "rgb(254, 202, 87)",
@@ -127,7 +127,7 @@
       ]
     },
     {
-      "name": "Chinese Palette\n🇨🇳",
+      "name": "Chinese Palette",
       "colors": [
         "rgb(236, 204, 104)",
         "rgb(255, 127, 80)",
@@ -152,7 +152,7 @@
       ]
     },
     {
-      "name": "Dutch Palette\n🇳🇱",
+      "name": "Dutch Palette",
       "colors": [
         "rgb(255, 195, 18)",
         "rgb(196, 229, 56)",
@@ -177,7 +177,7 @@
       ]
     },
     {
-      "name": "French Palette\n🇫🇷",
+      "name": "French Palette",
       "colors": [
         "rgb(250, 211, 144)",
         "rgb(248, 194, 145)",
@@ -202,7 +202,7 @@
       ]
     },
     {
-      "name": "German Palette\n🇩🇪",
+      "name": "German Palette",
       "colors": [
         "rgb(252, 92, 101)",
         "rgb(253, 150, 68)",
@@ -227,7 +227,7 @@
       ]
     },
     {
-      "name": "Indian Palette\n🇮🇳",
+      "name": "Indian Palette",
       "colors": [
         "rgb(254, 164, 127)",
         "rgb(37, 204, 247)",
@@ -252,7 +252,7 @@
       ]
     },
     {
-      "name": "Russian Palette\n🇷🇺",
+      "name": "Russian Palette",
       "colors": [
         "rgb(243, 166, 131)",
         "rgb(247, 215, 148)",
@@ -277,7 +277,7 @@
       ]
     },
     {
-      "name": "Spanish Palette\n🇪🇸",
+      "name": "Spanish Palette",
       "colors": [
         "rgb(64, 64, 122)",
         "rgb(112, 111, 211)",
@@ -302,7 +302,7 @@
       ]
     },
     {
-      "name": "Swedish Palette\n🇸🇪",
+      "name": "Swedish Palette",
       "colors": [
         "rgb(239, 87, 119)",
         "rgb(87, 95, 207)",
@@ -327,7 +327,7 @@
       ]
     },
     {
-      "name": "Turkish Palette\n🇹🇷",
+      "name": "Turkish Palette",
       "colors": [
         "rgb(205, 132, 241)",
         "rgb(255, 204, 204)",

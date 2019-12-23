@@ -2,8 +2,29 @@
 <html>
   <link href="./index.css" type="text/css" rel="stylesheet">
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div class="header">
+        <div class="part" v-for="(n, i) in partName" :key="i">{{ n }}</div>
+      </div>
+      <div class="container">
+        <div class="navurl" v-for="(u, i) in partUrl" :key="i" v-show="i === chosen_index">{{ u }}</div>
+        <div class="inner" v-for="(part, i) in partData" :key="i" v-show="i === chosen_index">
+          <div class="inner-content" v-for="(colors, i) in part" :key="i">
+            <div class="inner-container">
+              <div class="colors" :class="{morecolor: colors.colors.length > 7, lesscolor: colors.colors.length < 8}">
+                <div class="color" v-for="(color, i) in colors.colors" :key="i" :style="{backgroundColor: color}"></div>
+              </div>
+              <div class="name">
+                {{ colors.name}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
-  <script type="text/javascript" src="../src/myelemenet.js"></script>
-  <script type="text/javascript" src="../src/render.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+  <script type="text/javascript" src="../src/vuepart.js"></script>
+  <!-- <script type="text/javascript" src="../src/myelemenet.js"></script>
+  <script type="text/javascript" src="../src/render.js"></script> -->
 </html>

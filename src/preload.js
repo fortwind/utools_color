@@ -12,7 +12,7 @@ const getJsonFile = (jsonPath, type) => {
       const stat = fs.statSync(fpath)
       // stat.isDirectory() && findJsonFile(fpath)
       if (v.split('.')[1] === type && stat.isFile()) {
-        const name = v.split('.')[0]
+        const name = v.split('.')[0].slice(1)
         const data = fs.readFileSync(fpath, 'utf-8')
         jsonFiles.push({ name, data: type === 'json' ? JSON.parse(data) : data })
       }
@@ -24,7 +24,7 @@ const getJsonFile = (jsonPath, type) => {
 const jsonpath = path.join(__dirname, '../colors')
 window.jsonData = getJsonFile(jsonpath, 'json')
 
-const templatePath = path.join(__dirname, '../template')
-window.template = getJsonFile(templatePath, 'template')
-console.log(template)
+// const templatePath = path.join(__dirname, '../template')
+// window.template = getJsonFile(templatePath, 'template')
+// console.log(template[0].data)
 
