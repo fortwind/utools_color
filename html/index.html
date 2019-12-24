@@ -3,21 +3,37 @@
   <link href="./index.css" type="text/css" rel="stylesheet">
   <body>
     <div id="app">
-      <div class="header">
-        <div class="part" v-for="(n, i) in partName" :key="i">{{ n }}</div>
-      </div>
-      <div class="container">
-        <div class="navurl" v-for="(u, i) in partUrl" :key="i" v-show="i === chosen_index">{{ u }}</div>
-        <div class="inner" v-for="(part, i) in partData" :key="i" v-show="i === chosen_index">
-          <div class="inner-content" v-for="(colors, i) in part" :key="i">
-            <div class="inner-container">
-              <div class="colors" :class="{morecolor: colors.colors.length > 7, lesscolor: colors.colors.length < 8}">
-                <div class="color" v-for="(color, i) in colors.colors" :key="i" :style="{backgroundColor: color}"></div>
-              </div>
-              <div class="name">
-                {{ colors.name}}
+      <div v-show="!detailPage" class="place1">
+        <div class="header">
+          <span class="part" v-for="(n, i) in partName" ref="header" :class="{'is-active': i === chosen_index}" :key="i" @click="changeColors(i)">{{ n }}</span>
+          <div class="slider" :style="{width: `${slider_width - 10}px`, transform: `translateX(${transform_dist}px)`}"></div>
+        </div>
+        <div class="container">
+          <div class="navurl" v-for="(u, i) in partUrl" :key="i" v-show="i === chosen_index">
+            <a :href="u" style="color:#ffffff">{{ u }}</a>
+          </div>
+          <div class="inner" v-for="(part, i) in partData" :key="i" v-show="i === chosen_index">
+            <div class="inner-content" v-for="(colors, i) in part" :key="i" @click="getDetail(i)">
+              <div class="inner-container">
+                <div class="colors smallcolors" :class="{morecolor: colors.colors.length > 7, lesscolor: colors.colors.length < 8}">
+                  <div class="color" v-for="(color, i) in colors.colors" :key="i" :style="{backgroundColor: color}"></div>
+                </div>
+                <div class="name">
+                  {{ colors.name}}
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="mask" :class="{'mask-move': loadmask}"></div>
+      <div v-show="detailPage" class="place2">
+        <div class="dheader">
+          <span class="back" @click="goBack">&larr; BACK</span>
+        </div>
+        <div class="colors bigcolors" :class="{morecolor: chosen_colors.length > 7, lesscolor: chosen_colors.length < 8}">
+          <div class="color" v-for="(color, i) in chosen_colors" :key="i" :style="{backgroundColor: color}" @click="copy2clip(i)">
+            <span ref="colorname" class="color-name">{{ color }}</span>
           </div>
         </div>
       </div>
