@@ -16,7 +16,7 @@
             <div class="inner-content" v-for="(colors, i) in part" :key="i" @click="getDetail(i)">
               <div class="inner-container">
                 <div class="colors smallcolors" :class="{morecolor: colors.colors.length > 7, lesscolor: colors.colors.length < 8}">
-                  <div class="color" v-for="(color, i) in colors.colors" :key="i" :style="{backgroundColor: color}"></div>
+                  <div class="color smallcolor" v-for="(color, i) in colors.colors" :key="i" :style="{backgroundColor: color}"></div>
                 </div>
                 <div class="name">
                   {{ colors.name}}
@@ -29,17 +29,28 @@
       <div class="mask" :class="{'mask-move': loadmask}"></div>
       <div v-show="detailPage" class="place2">
         <div class="dheader">
-          <span class="back" @click="goBack">&larr; BACK</span>
+          <span class="back" @click="goBack">&larr; Back</span>
         </div>
         <div class="colors bigcolors" :class="{morecolor: chosen_colors.length > 7, lesscolor: chosen_colors.length < 8}">
-          <div class="color" v-for="(color, i) in chosen_colors" :key="i" :style="{backgroundColor: color}" @click="copy2clip(i)">
-            <span ref="colorname" class="color-name">{{ color }}</span>
+          <div class="color bigcolor" v-for="(color, i) in chosen_colors" :key="i" :style="{backgroundColor: color}" @click="copy2clip">
+            <span class="color-copy"> COPY </span>
+            <span class="corner">{{ color }}</span>
+          </div>
+        </div>
+        <div v-show="copiedShow" class="success-mask">
+          <div class="cont" :style="{backgroundColor: copiedColor}">
+            <div class="colorShow">
+              <div class="message"><i>{{ copiedMessage }}</i></div>
+              <span class="cc">{{ copiedColor }}</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+  <script src="../src/global.js"></script>
   <script type="text/javascript" src="../src/vuepart.js"></script>
   <!-- <script type="text/javascript" src="../src/myelemenet.js"></script>
   <script type="text/javascript" src="../src/render.js"></script> -->

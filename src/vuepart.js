@@ -12,7 +12,11 @@ const vm = new Vue((() => {
       transform_dist: 0,
       loadmask: false,
       loadmask2right: false,
-      detailPage: false
+      detailPage: false,
+      emoji_array,
+      copiedShow: false,
+      copiedMessage: '',
+      copiedColor: ''
     },
     methods: {
       changeColors (index) {
@@ -34,22 +38,57 @@ const vm = new Vue((() => {
           this.detailPage = false
         }, 400)
       },
-      copy2clip (index) {
-        console.log(this.$refs.colorname[index])
-        this.$refs.colorname[index].select()
-        const result = document.execCommand('copy')
-        console.log(result)
+      copy2clip () {
+        const messages = ['COPIED!', 'GOT IT!', 'PASTE ME!', 'IT\'LL ROCK!', 'RIGHT ONE!', 'WILL DO!']
+        new ClipboardJS('.bigcolor', {
+          text: (trigger) => {
+            const color = trigger.style.backgroundColor
+            return color
+          }
+        }).on('success', ({text}) => {
+          this.copiedMessage = messages[Math.floor(Math.random() * messages.length)]
+          this.copiedColor = text
+          this.copiedShow = true
+          setTimeout(() => {
+            this.copiedShow = false
+            this.copiedMessage = ''
+            this.copiedColor = ''
+          }, 1000)
+        })
+      },
+      colorWithFormat(color) {
+        if (this.format === "hex") return color
+        else if (this.format === "hex2") return color.substring(1)
+        else if (this.format === "rgb") return this.hexToRgb(color)
+        else if (this.format === "rgba") {
+          let code = this.hexToRgb(color);
+          code = code.replace("rgb", "rgba").substring(0, code.length)
+          code += ",1.0)"
+          return code
+        }
+      },
+      hexToRgb(hex) {
+        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+        const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
+        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+          return r + r + g + g + b + b
+        })
+
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+        return result
+          ? `rgb(${parseInt(result[1], 16)}, ${parseInt(
+            result[2],
+            16
+          )}, ${parseInt(result[3], 16)})`
+          : null
       }
     },
-    mounted () {
-      console.log(this.$refs.header)
+    mounted() {
       this.header_width = this.$refs.header.map(v => {
         const { width } = v.getBoundingClientRect()
         return width
       })
       this.slider_width = this.header_width[this.chosen_index]
-      console.log(this.slider_width)
-      console.log(this.partData)
     }
   }
 })())
