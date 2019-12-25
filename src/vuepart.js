@@ -88,6 +88,7 @@ const vm = new Vue((() => {
         const { width } = v.getBoundingClientRect()
         return width
       })
+      console.log(this.copiedShow)
       this.slider_width = this.header_width[this.chosen_index]
     }
   }
