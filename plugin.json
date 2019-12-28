@@ -1,14 +1,16 @@
 {
-	"pluginName": "helloWorld",
+	"pluginName": "又一款颜色插件",
 	"description": "desc",
 	"main": "./html/index.html",
+	"author": "bzl",
 	"version": "0.0.1",
 	"preload": "./src/preload.js",
+	"logo": "color-hunt-palettes-logo.png",
 	"features": [
-	    {
-			"code": "lll",
-			"explain": "hello world",
-	        "cmds":["kkk"]
-	    }
+		{
+			"code": "flatuicolors",
+			"explain": "又一款颜色插件",
+	        "cmds":["flat", "颜色", "color"]
+		}
 	]
 }

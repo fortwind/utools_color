@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <link href="./index.css" type="text/css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
   <body>
     <div id="app">
       <div v-show="!detailPage" class="place1">
@@ -12,15 +13,19 @@
           <div class="navurl" v-for="(u, i) in partUrl" :key="i" v-show="i === chosen_index">
             <a :href="u" style="color:#ffffff">{{ u }}</a>
           </div>
-          <div class="inner" v-for="(part, i) in partData" :key="i" v-show="i === chosen_index">
-            <div class="inner-content" v-for="(colors, i) in part" :key="i" @click="getDetail(i)">
-              <div class="inner-container">
-                <!-- <div class="colors smallcolors" :class="{morecolor: colors.colors.length > 7, lesscolor: colors.colors.length < 8}"> -->
-                <div class="colors smallcolors morecolor">
-                  <div class="color smallcolor" v-for="(color, i) in colors.colors" :key="i" :style="{backgroundColor: color}"></div>
-                </div>
-                <div class="name">
-                  {{ colors.name}}
+          <div class="content">
+            <div class="inner">
+              <div class="inner-content" v-for="(colors, i) in curPartData" :key="i" @click="getDetail(i)">
+                <div class="inner-container" @mouseenter="innerenter(i)" @mouseleave="innerleave(i)">
+                  <div class="colors smallcolors"
+                    :class="{morecolor: colors.colors.length > 7, lesscolor: colors.colors.length < 8}">
+                    <div class="color smallcolor" v-for="(color, i) in colors.colors" :key="i"
+                      :style="{backgroundColor: color, flexGrow: (2 * i + 1) ** (1 / 2)}"></div>
+                  </div>
+                  <div class="name">
+                    {{ colors.name}}
+                    <span ref='emoji' class="emoji">{{ colors.emoji }}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -31,10 +36,15 @@
       <div v-show="detailPage" class="place2">
         <div class="dheader">
           <span class="back" @click="goBack">&larr; Back</span>
+          <div class="conver-color">
+            <label v-for="mode in ['RGB', 'HEX', 'HSLA']">
+              <input type="radio" :value="mode" />
+              <span>{{mode}}</span>
+            </label>
+          </div>
         </div>
-        <!-- <div class="colors bigcolors" :class="{morecolor: chosen_colors.length > 7, lesscolor: chosen_colors.length < 8}"> -->
-        <div class="colors bigcolors morecolor">
-          <div class="color bigcolor" v-for="(color, i) in chosen_colors" :key="i" :style="{backgroundColor: color}" @click="copy2clip">
+        <div class="colors bigcolors" :class="{morecolor: chosen_colors.length > 7, lesscolor: chosen_colors.length < 8}">
+          <div class="color bigcolor" v-for="(color, i) in chosen_colors" :key="i" :style="{backgroundColor: color, flexGrow: (2 * i + 1) ** (1 / 2)}" @click="copy2clip">
             <span class="color-copy"> COPY </span>
             <span class="corner">{{ color }}</span>
           </div>
@@ -50,8 +60,9 @@
       </div>
     </div>
   </body>
-  <script src="../utils/vue.min.js"></script>
-  <script src="../utils/clipboard.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+  <!-- <script src="../src/emoji.js"></script> -->
+  <script src="../src/color.js"></script>
   <script src="../src/global.js"></script>
   <script type="text/javascript" src="../src/vuepart.js"></script>
   <!-- <script type="text/javascript" src="../src/myelemenet.js"></script>
