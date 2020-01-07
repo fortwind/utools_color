@@ -1,11 +1,145 @@
-html, body{
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 386px;
-  color: #ffffff;
-  background-color: #3C40C6;
+<script>
+import { onMount } from 'svelte'
+
+let header = []
+
+let partName = window.jsonData.map(v => v.name)
+let partUrl = window.jsonData.map(v => v.data.url)
+let partData = window.jsonData.map(v => v.data.inner)
+let chosen_colors = []
+let chosen_index = 0
+let header_width = [0, 0]
+let slider_width = 0
+let transform_dist = 0
+let loadmask = false
+let loadmask2right = false
+let detailPage = false
+let emoji_array = window.emoji_array
+let emojiChange = ''
+let copiedShow = false
+let copiedMessage = ''
+let copiedColor = ''
+
+$: curPartData = partData[chosen_index]
+
+const changeColors = (index) => () => {
+	chosen_index = index
+	slider_width = header_width[index]
+	transform_dist = index - 1 < 0 ? 0 : header_width[index - 1]
 }
+
+const getDetail = (index) => () => {
+	if (loadmask) return false
+	chosen_colors = partData[chosen_index][index].colors
+	loadmask = true
+	setTimeout(() => {
+		detailPage = true
+	}, 300) // .mask transform
+}
+
+const goBack = () => {
+	loadmask = false
+	setTimeout(() => {
+		detailPage = false
+	}, 300) // .mask transform
+}
+
+const copy2clip = () => {
+	const messages = ['COPIED!', 'GOT IT!', 'PASTE ME!', 'IT\'LL ROCK!', 'RIGHT ONE!', 'WILL DO!']
+	new ClipboardJS('.bigcolor', {
+		text: (trigger) => {
+			const color = trigger.style.backgroundColor
+			return color
+		}
+	}).on('success', ({text}) => {
+		copiedMessage = messages[Math.floor(Math.random() * messages.length)]
+		copiedColor = text
+		copiedShow = true
+		setTimeout(() => {
+			copiedShow = false
+			copiedMessage = ''
+			copiedColor = ''
+		}, 1000) // .colorshow animation
+	})
+}
+
+onMount (() => {
+	header_width = header.map(v => {
+		const { width } = v.getBoundingClientRect()
+		return width
+	})
+	slider_width = header_width[chosen_index]
+})
+</script>
+
+<div id="app">
+	<div class="place1" style="{detailPage ? 'display:none' : ''}">
+		<div class="header">
+			{#each partName as n, i}
+				<span class="part" bind:this={header[i]} class:is-active="{chosen_index === i}" on:click={changeColors(i)}>{ n }</span>
+			{/each}
+			<div class="slider" style="width: {slider_width - 10}px; transform: translateX({transform_dist}px)"></div>
+		</div>
+		<div class="container">
+			{#each partUrl as u, i}
+				<div class="navurl" style="display: { i === chosen_index ? '' : 'none' }">
+					<a href="{u}" style="color:#ffffff">{ u }</a>
+				</div>
+			{/each}
+			<div class="content">
+				<div class="inner">
+					{#each curPartData as { colors, name, emoji }, i}
+						<div class="inner-content" on:click="{getDetail(i)}">
+							<div class="inner-container">
+								<div class="colors smallcolors {colors.length > 7 ? 'morecolor' : 'lesscolor'}">
+									{#each colors as color, i}
+										<div class="color smallcolor" style="background-color: {color}; flex-grow: {(2 * i + 1) ** (1 / 2)}"></div>
+									{/each}
+								</div>
+								<div class="name">
+									{ name }
+									<!-- <span class="emoji">{ emoji }</span> -->
+								</div>
+							</div>
+						</div>
+					{/each}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="mask" class:mask-move="{loadmask}"></div>
+	<div class="place2" style="{detailPage ? '' : 'display:none'}">
+		<div class="dheader">
+			<span class="back" on:click="{goBack}">&larr; Back</span>
+			<!-- <div class="conver-color">
+				{#each ['RGB', 'HEX', 'HSLA'] as mode}
+					<label>
+						<input type="radio" bind:value="{mode}" />
+						<span>{mode}</span>
+					</label>
+				{/each}
+			</div> -->
+		</div>
+		<div class="colors bigcolors {chosen_colors.length > 7 ? 'morecolor' : 'lesscolor'}">
+			{#each chosen_colors as color, i}
+				<div class="color bigcolor" style="background-color: {color}; flex-grow: {(2 * i + 1) ** (1 / 2)}" on:click="{copy2clip}">
+					<span class="color-copy"> COPY </span>
+					<span class="corner">{ color }</span>
+				</div>
+			{/each}
+		</div>
+		<div class="success-mask" style="{ copiedShow ? '' : 'display:none' }">
+			<div class="cont" style="background-color: {copiedColor}">
+				<div class="colorShow">
+					<div class="message"><i>{ copiedMessage }</i></div>
+					<span class="cc">{ copiedColor }</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
 
 #app{
   width: 100%;
@@ -42,6 +176,7 @@ html, body{
   padding-right: 10px;
   color: #ffffff8f;
   transition: color 0.2s;
+  cursor: pointer;
 }
 
 .part.is-active{
@@ -49,7 +184,6 @@ html, body{
 }
 
 .part:hover{
-  cursor: pointer;
   color: #ffffff;
 }
 
@@ -297,4 +431,4 @@ html, body{
   font-weight: bold;
   margin-top: 30px;
 }
-
+</style>
