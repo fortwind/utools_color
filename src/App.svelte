@@ -46,12 +46,14 @@ const goBack = () => {
 
 const copy2clip = () => {
 	const messages = ['COPIED!', 'GOT IT!', 'PASTE ME!', 'IT\'LL ROCK!', 'RIGHT ONE!', 'WILL DO!']
-	new ClipboardJS('.bigcolor', {
+	let clipbord = new ClipboardJS('.bigcolor', {
 		text: (trigger) => {
 			const color = trigger.style.backgroundColor
 			return color
 		}
 	}).on('success', ({text}) => {
+    // console.log(998)
+    // clipbord.destroy()
 		copiedMessage = messages[Math.floor(Math.random() * messages.length)]
 		copiedColor = text
 		copiedShow = true
@@ -62,6 +64,7 @@ const copy2clip = () => {
 		}, 1000) // .colorshow animation
 	})
 }
+copy2clip()
 
 onMount (() => {
 	header_width = header.map(v => {
@@ -122,7 +125,7 @@ onMount (() => {
 		</div>
 		<div class="colors bigcolors {chosen_colors.length > 7 ? 'morecolor' : 'lesscolor'}">
 			{#each chosen_colors as color, i}
-				<div class="color bigcolor" style="background-color: {color}; flex-grow: {(2 * i + 1) ** (1 / 2)}" on:click="{copy2clip}">
+				<div class="color bigcolor" style="background-color: {color}; flex-grow: {(2 * i + 1) ** (1 / 2)}">
 					<span class="color-copy"> COPY </span>
 					<span class="corner">{ color }</span>
 				</div>
